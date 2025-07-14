@@ -86,7 +86,7 @@ jobs:
         ORGANIZATION: "gruppo-florence"
         appEnvironment: "DEV"
         DEPLOY_ENVIRONMENT: "DEV"
-        MULE_RUNTIME_VERSION: "4.9-java17"
+        MULE_RUNTIME_VERSION: "4.9"
         stconcate: "-"
         replicas: "1"
         vCores: "0.1"
