@@ -31,7 +31,7 @@
 				<extensions>true</extensions>
 				<configuration>
 					<classifier>mule-application</classifier>
-					<cloudHub2Deployment>
+					<cloudhub2Deployment>
 						<uri>https://eu1.anypoint.mulesoft.com</uri>
 						<muleVersion>${muleRuntime}</muleVersion>
 						<releaseChannel>${mule.deploy.releaseChannel}</releaseChannel>
@@ -55,7 +55,7 @@
 							<anypoint.platform.client_secret>${CLIENT_SECRET_ENVIRONMENT}</anypoint.platform.client_secret>
 							<env>${env}</env>
 						</properties>
-					</cloudHub2Deployment>
+					</cloudhub2Deployment>
 				</configuration>
 			</plugin>
 		</plugins>
