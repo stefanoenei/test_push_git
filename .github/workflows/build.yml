@@ -94,7 +94,7 @@ jobs:
       
       run: |
         artifactName=$(ls *.jar | head -1)
-        appName=$(ls *.jar | head -1 | cut -d "-" -f 1,2,3)
+        appName=gf-${artifactName}-test
         appNameCloudhub=${appName}
         mvn -e -X deploy -DmuleDeploy \
          -Dmule.artifact=$artifactName \
