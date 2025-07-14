@@ -84,7 +84,7 @@ jobs:
         CLIENT_ID_ENVIRONMENT: ${{ secrets.ENVIRONMENT_CLIENT_ID }}
         CLIENT_SECRET_ENVIRONMENT: ${{ secrets.ENVIRONMENT_CLIENT_SECRET }}
         ORGANIZATION: "gruppo-florence"
-        appEnvironment: "Sandbox"
+        appEnvironment: "DEV"
         DEPLOY_ENVIRONMENT: "DEV"
         MULE_RUNTIME_VERSION: "4.6-java17"
         WorkerType: "MICRO"
