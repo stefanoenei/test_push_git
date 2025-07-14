@@ -93,7 +93,7 @@ jobs:
         target: "Cloudhub-EU-Central-1"
       
       run: |
-        artifactName=$(ls *.jar | head -1)
+        artifactName=$(ls *.jar | head -1 | cut -d'-' -f1)
         appName=gf-${artifactName}-test
         appNameCloudhub=${appName}
         mvn -e -X deploy -DmuleDeploy \
