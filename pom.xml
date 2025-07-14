@@ -34,6 +34,8 @@
 					<cloudhub2Deployment>
 						<uri>https://eu1.anypoint.mulesoft.com</uri>
 						<muleVersion>${muleRuntime}</muleVersion>
+						<provider>MC</provider>
+						<target>${target}</target>
 						<releaseChannel>${mule.deploy.releaseChannel}</releaseChannel>
 						<connectedAppClientId>${clientId}</connectedAppClientId>
 						<connectedAppClientSecret>${clientSecret}</connectedAppClientSecret>
