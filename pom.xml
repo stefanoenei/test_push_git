@@ -51,7 +51,7 @@
     								</objectStoreV2>
  							</services>
 						</integrations>
-						<persistentQueues>false</persistentQueues>
+						<!--<persistentQueues>false</persistentQueues> -->
 						<!-- <region>${region}</region> -->
 						<skipDeploymentVerification>true</skipDeploymentVerification>
 						<!--<applyLatestRuntimePatch>true</applyLatestRuntimePatch>-->	
