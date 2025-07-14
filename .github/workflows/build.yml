@@ -87,9 +87,9 @@ jobs:
         appEnvironment: "DEV"
         DEPLOY_ENVIRONMENT: "DEV"
         MULE_RUNTIME_VERSION: "4.6-java17"
-        WorkerType: "MICRO"
-        Workers: "1"
-        Region: "eu-central-1"
+        #WorkerType: "MICRO"
+        #Workers: "1"
+        #Region: "eu-central-1"
         stconcate: "-"
         
       
@@ -105,9 +105,6 @@ jobs:
          -DbusinessGroup="$ORGANIZATION" \
          -DmuleRuntime="$MULE_RUNTIME_VERSION" \
          -Denvironment="$appEnvironment" \
-         -DworkerType="$WorkerType" \
-         -Dworkers="$Workers" \
-         -Dregion="$Region" \
          -Denv="$DEPLOY_ENVIRONMENT" \
          -DapplicationName="$appNameCloudhub" \
          -DskipTests
