@@ -91,7 +91,8 @@ jobs:
         #Workers: "1"
         #Region: "eu-central-1"
         stconcate: "-"
-        
+        replicas: "1"
+        vCores: "0.1"
       
       run: |
         artifactName=$(ls *.jar | head -1)
@@ -107,4 +108,6 @@ jobs:
          -Denvironment="$appEnvironment" \
          -Denv="$DEPLOY_ENVIRONMENT" \
          -DapplicationName="$appNameCloudhub" \
+         -Dreplicas="$replicas" \
+         -DvCores="$vCores" \
          -DskipTests
