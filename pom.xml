@@ -44,7 +44,7 @@
 						<!-- <workers>${workers}</workers> -->
 						<!-- <workerType>${workerType}</workerType> -->
 						<deploymentTimeout>30000</deploymentTimeout>
-						<objectStoreV2>true</objectStoreV2>
+						<!-- <objectStoreV2>true</objectStoreV2> -->
 						<persistentQueues>false</persistentQueues>
 						<!-- <region>${region}</region> -->
 						<skipDeploymentVerification>true</skipDeploymentVerification>
