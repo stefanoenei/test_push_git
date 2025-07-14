@@ -90,6 +90,7 @@ jobs:
         stconcate: "-"
         replicas: "1"
         vCores: "0.1"
+        target: "cloudhub-eu-central-1"
       
       run: |
         artifactName=$(ls *.jar | head -1)
@@ -107,4 +108,5 @@ jobs:
          -DapplicationName="$appNameCloudhub" \
          -Dreplicas="$replicas" \
          -DvCores="$vCores" \
+         -Dtarget="$target" \
          -DskipTests
