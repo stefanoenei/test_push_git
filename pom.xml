@@ -44,13 +44,19 @@
 						<!-- <workers>${workers}</workers> -->
 						<!-- <workerType>${workerType}</workerType> -->
 						<deploymentTimeout>30000</deploymentTimeout>
-						<!-- <objectStoreV2>true</objectStoreV2> -->
+						<integrations>
+  							<services>
+    								<objectStoreV2>
+      									<enabled>true</enabled>
+    								</objectStoreV2>
+ 							</services>
+						</integrations>
 						<persistentQueues>false</persistentQueues>
 						<!-- <region>${region}</region> -->
 						<skipDeploymentVerification>true</skipDeploymentVerification>
-						<applyLatestRuntimePatch>true</applyLatestRuntimePatch>		
-						<replicas>1</replicas>
-						<vCores>0.1</vCores>
+						<!--<applyLatestRuntimePatch>true</applyLatestRuntimePatch>-->	
+						<replicas>${replicas}</replicas>
+						<vCores>${vCore}</vCores>
 						<properties>
 							<!-- <secureKey>${secureKey}</secureKey> -->
 							<anypoint.platform.client_id>${CLIENT_ID_ENVIRONMENT}</anypoint.platform.client_id>
