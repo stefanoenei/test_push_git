@@ -49,12 +49,12 @@
 						<region>${region}</region>
 						<skipDeploymentVerification>true</skipDeploymentVerification>
 						<applyLatestRuntimePatch>true</applyLatestRuntimePatch>
-						<properties>
+						<!-- <properties>
 							<secureKey>${secureKey}</secureKey>
 							<anypoint.platform.client_id>${CLIENT_ID_ENVIRONMENT}</anypoint.platform.client_id>
 							<anypoint.platform.client_secret>${CLIENT_SECRET_ENVIRONMENT}</anypoint.platform.client_secret>
 							<env>${env}</env>
-						</properties>
+						</properties> -->
 					</cloudHubDeployment>
 				</configuration>
 			</plugin>
