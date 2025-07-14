@@ -80,7 +80,7 @@ jobs:
         CLIENTID: ${{ secrets.ANYPOINT_PLATFORM_USERNAME }}
         CLIENTSECRET: ${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}
         GRANTTYPE: "client_credentials"
-        secureKey: ${{ secrets.ANYPOINT_ENCRYPTIONKEY }}
+        #secureKey: ${{ secrets.ANYPOINT_ENCRYPTIONKEY }}
         CLIENT_ID_ENVIRONMENT: ${{ secrets.ENVIRONMENT_CLIENT_ID }}
         CLIENT_SECRET_ENVIRONMENT: ${{ secrets.ENVIRONMENT_CLIENT_SECRET }}
         ORGANIZATION: "gruppo-florence"
@@ -91,6 +91,7 @@ jobs:
         Workers: "1"
         Region: "eu-central-1"
         stconcate: "-"
+        
       
       run: |
         artifactName=$(ls *.jar | head -1)
@@ -101,7 +102,6 @@ jobs:
          -DclientId="$CLIENTID" \
          -DclientSecret="$CLIENTSECRET" \
          -DgrantType="$GRANTTYPE" \
-         -DsecureKey="$secureKey" \
          -DbusinessGroup="$ORGANIZATION" \
          -DmuleRuntime="$MULE_RUNTIME_VERSION" \
          -Denvironment="$appEnvironment" \
