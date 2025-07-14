@@ -29,6 +29,34 @@
 				<artifactId>mule-maven-plugin</artifactId>
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
+				<configuration>
+					<classifier>mule-application</classifier>
+					<cloudHubDeployment>
+						<uri>https://eu1.anypoint.mulesoft.com</uri>
+						<muleVersion>${muleRuntime}</muleVersion>
+						<releaseChannel>${mule.deploy.releaseChannel}</releaseChannel>
+						<connectedAppClientId>${clientId}</connectedAppClientId>
+						<connectedAppClientSecret>${clientSecret}</connectedAppClientSecret>
+						<connectedAppGrantType>${grantType}</connectedAppGrantType>
+						<applicationName>${applicationName}</applicationName>
+						<businessGroup>${businessGroup}</businessGroup>
+						<environment>${environment}</environment>
+						<workers>${workers}</workers>
+						<workerType>${workerType}</workerType>
+						<deploymentTimeout>30000</deploymentTimeout>
+						<objectStoreV2>true</objectStoreV2>
+						<persistentQueues>false</persistentQueues>
+						<region>${region}</region>
+						<skipDeploymentVerification>true</skipDeploymentVerification>
+						<applyLatestRuntimePatch>true</applyLatestRuntimePatch>
+						<properties>
+							<secureKey>${secureKey}</secureKey>
+							<anypoint.platform.client_id>${CLIENT_ID_ENVIRONMENT}</anypoint.platform.client_id>
+							<anypoint.platform.client_secret>${CLIENT_SECRET_ENVIRONMENT}</anypoint.platform.client_secret>
+							<env>${env}</env>
+						</properties>
+					</cloudHubDeployment>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

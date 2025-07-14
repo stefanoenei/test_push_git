@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<sub-flow name="hello_world_Sub_Flow" doc:id="71d883b0-ec50-415c-9140-32c19499cf47" >
+		<logger level="INFO" doc:name="Logger" doc:id="c2ea6471-272d-4f73-be76-21b201cc5c36" message='#["Hello world!"]'/>
+	</sub-flow>
+</mule>
