@@ -30,10 +30,10 @@ jobs:
       run: cp settings.xml ~/.m2/settings.xml
 
     - name: Insert username into settings.xml
-      run: sed -i 's/ANYPOINT_PLATFORM_USERNAME/${{ secrets.ANYPOINT_PLATFORM_USERNAME }}/g' ~/.m2/settings.xml
+      run: sed -i 's|ANYPOINT_PLATFORM_USERNAME|${{ secrets.ANYPOINT_PLATFORM_USERNAME }}|g' ~/.m2/settings.xml
 
     - name: Insert password into settings.xml
-      run: sed -i 's/ANYPOINT_PLATFORM_PASSWORD/${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}/g' ~/.m2/settings.xml
+      run: sed -i 's|ANYPOINT_PLATFORM_PASSWORD|${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}|g' ~/.m2/settings.xml
 
     - name: Print effective-settings (optional)
       run: mvn help:effective-settings --settings ~/.m2/settings.xml
