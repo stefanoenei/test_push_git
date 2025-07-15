@@ -1,81 +1,139 @@
-name: Build and Deploy to DEV (CloudHub 2.0)
+# This workflow will build a MuleSoft project and deploy to CloudHub2.0
+
+name: Build and Deploy to DEV
 
 on:
   workflow_dispatch:
-
-env:
-  ENVIRONMENT: DEV
-  TARGET: Cloudhub-EU-Central-1
-  BUSINESS_GROUP: gruppo-florence
-  MULE_RUNTIME_VERSION: 4.9
-  REPLICAS: "1"
-  VCORES: "0.1"
-  APPLICATION_NAME: gf-testpushgit-dev
-  MAVEN_SETTINGS_PATH: ~/.m2/settings.xml
-
+    
 jobs:
-  build-and-publish:
+  build:
+    environment: DEV
     runs-on: ubuntu-latest
-
+    
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-
-    - name: Cache Maven packages
-      uses: actions/cache@v3
+    
+    - uses: actions/checkout@v3
+    
+    - uses: actions/cache@v3
       with:
         path: ~/.m2/repository
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-maven-
-
-    - name: Set up Java
+    
+    - name: Set up JDK 17
       uses: actions/setup-java@v1
       with:
         java-version: 17
+          
+    - name: Create .m2 folder
+      run: mkdir -p ~/.m2
 
-    - name: Prepare Maven settings.xml
+    - name: Copy settings.xml to .m2 folder
+      run: cp settings.xml ~/.m2/settings.xml
+
+    - name: Build with Maven
+
+      env:
+        CLIENTID: ${{ secrets.ANYPOINT_PLATFORM_USERNAME }}
+        CLIENTSECRET: ${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}
+        ENVCLIENT: ${{ secrets.ENVIRONMENT_CLIENT_ID }}
+        ENVSECRET: ${{ secrets.ENVIRONMENT_CLIENT_SECRET }}
+        #SECUREKEY: ${{ secrets.SECUREKEY }}
+        ENVIRONMENT: "DEV"
+        TARGET: "Cloudhub-EU-Central-1"
+        DEPLOYMENTENV: "DEV"
+      run: mvn -B package --file pom.xml --settings ~/.m2/settings.xml -Denv="$ENVIRONMENT" -Dtarget="$TARGET" -Ddeployment.env="$DEPLOYMENTENV" -Danypoint.client_id="$ENVCLIENT" -Danypoint.client_secret="$ENVSECRET" -DskipTests=true -DconnectedAppClientId="$CLIENTID" -DconnectedAppClientSecret="$CLIENTSECRET"  #-Dkey="$SECUREKEY"
+   
+    - name: Publish to Exchange
+      env:
+        CLIENTID: ${{ secrets.ANYPOINT_PLATFORM_USERNAME }}
+        CLIENTSECRET: ${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}
+        ENVCLIENT: ${{ secrets.ENVIRONMENT_CLIENT_ID }}
+        ENVSECRET: ${{ secrets.ENVIRONMENT_CLIENT_SECRET }}
+        #SECUREKEY: ${{ secrets.SECUREKEY }}
+        TARGET: "Cloudhub-EU-Central-1"
+        appEnvironment: "DEV"
+        DEPLOYMENTENV: "DEV"
+        ORGANIZATION: "gruppo-florence"
+        replicas: "1"
+        vCores: "0.1"
+
       run: |
-        mkdir -p ~/.m2
-        cp settings.xml $MAVEN_SETTINGS_PATH
-        sed -i 's|ANYPOINT_CLIENT_ID|${{ secrets.ANYPOINT_CLIENT_ID }}|g' $MAVEN_SETTINGS_PATH
-        sed -i 's|ANYPOINT_CLIENT_SECRET|${{ secrets.ANYPOINT_CLIENT_SECRET }}|g' $MAVEN_SETTINGS_PATH
-
-    - name: Build and Deploy to Exchange
-      run: mvn clean deploy --settings $MAVEN_SETTINGS_PATH -DskipTests
-
-  deploy-cloudhub:
-    needs: build-and-publish
+        artifactName=$(ls *.jar | head -1)
+        mvn -e  deploy --settings settings.xml \
+         -Danypoint.client_id="$ENVCLIENT" \
+         -Danypoint.client_secret="$ENVSECRET" \
+         -Dtarget="$TARGET" \
+         -Denv="$appEnvironment" \
+         -Ddeployment.env="$DEPLOYMENTENV" \
+         -DconnectedAppClientId="$CLIENTID" \
+         -DconnectedAppClientSecret="$CLIENTSECRET" \
+         -DbusinessGroup="$ORGANIZATION" \
+         -DvCores="$vCores" \
+         -Dreplicas="$replicas" \
+   
+    - name: Stamp artifact file name with commit hash
+      run: |
+        artifactName1=$(ls target/*.jar | head -1)
+        commitHash=$(git rev-parse --short "$GITHUB_SHA")
+        artifactName2=$(ls target/*.jar | head -1 | sed "s/.jar/-$commitHash.jar/g")
+        mv $artifactName1 $artifactName2
+    
+    - name: Upload artifact 
+      uses: actions/upload-artifact@master
+      with:
+          name: artifacts
+          path: target/*.jar
+        
+  deploy:
+    environment: DEV
+    needs: build
     runs-on: ubuntu-latest
 
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-
-    - name: Cache Maven packages
-      uses: actions/cache@v3
+    steps:    
+    
+    - uses: actions/checkout@v3
+    
+    - uses: actions/cache@v3
       with:
         path: ~/.m2/repository
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-maven-
-
-    - name: Prepare Maven settings.xml
+    
+    - uses: actions/download-artifact@master
+      with:
+        name: artifacts
+    
+    - name: Deploy to DEV
+      env:
+        CLIENTID: ${{ secrets.ANYPOINT_PLATFORM_USERNAME }}
+        CLIENTSECRET: ${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}
+        ENVCLIENT: ${{ secrets.ENVIRONMENT_CLIENT_ID }}
+        ENVSECRET: ${{ secrets.ENVIRONMENT_CLIENT_SECRET }}
+        #SECUREKEY: ${{ secrets.SECUREKEY }}
+        appEnvironment: "DEV"
+        DEPLOYMENTENV: "DEV"
+        TARGET: "Cloudhub-EU-Central-1"
+        ORGANIZATION: "gruppo-florence"
+        replicas: "1"
+        vCores: "0.1"
+      
       run: |
-        mkdir -p ~/.m2
-        cp settings.xml $MAVEN_SETTINGS_PATH
-        sed -i 's|ANYPOINT_CLIENT_ID|${{ secrets.ANYPOINT_CLIENT_ID }}|g' $MAVEN_SETTINGS_PATH
-        sed -i 's|ANYPOINT_CLIENT_SECRET|${{ secrets.ANYPOINT_CLIENT_SECRET }}|g' $MAVEN_SETTINGS_PATH
-
-    - name: Deploy to CloudHub 2.0
-      run: |
-        mvn deploy -DmuleDeploy \
-          --settings $MAVEN_SETTINGS_PATH \
-          -DapplicationName=$APPLICATION_NAME \
-          -Dtarget=$TARGET \
-          -Denv=$ENVIRONMENT \
-          -DbusinessGroup=$BUSINESS_GROUP \
-          -DmuleRuntime=$MULE_RUNTIME_VERSION \
-          -Dreplicas=$REPLICAS \
-          -DvCores=$VCORES \
-          -DskipTests
+        artifactName=$(ls *.jar | head -1 | cut -d'-' -f1)
+        appName=gf-${artifactName}-dev
+        mvn -e  deploy -DmuleDeploy \
+         -Dmule.artifact="$artifactName" \
+         -Dtarget="$TARGET" \
+         -Denv="$appEnvironment" \
+         -Ddeployment.env="$DEPLOYMENTENV" \
+         -DconnectedAppClientId="$CLIENTID" \
+         -DconnectedAppClientSecret="$CLIENTSECRET" \
+         -Danypoint.client_id="$ENVCLIENT" \
+         -Danypoint.client_secret="$ENVSECRET" \
+         -DbusinessGroup="$ORGANIZATION" \
+         -DvCores="$vCores" \
+         -Dreplicas="$replicas" \
+         -DapplicationName="$appName" \
+         -DskipTests=true \
