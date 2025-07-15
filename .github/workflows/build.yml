@@ -71,7 +71,7 @@ jobs:
          -DconnectedAppClientSecret="$CLIENTSECRET" \
          -DbusinessGroup="$ORGANIZATION" \
          -DvCores="$vCores" \
-         -Dtarget="$target" \
+         -Dreplicas="$replicas" \
    
     - name: Stamp artifact file name with commit hash
       run: |
@@ -134,5 +134,5 @@ jobs:
          -Danypoint.client_secret="$ENVSECRET" \
          -DbusinessGroup="$ORGANIZATION" \
          -DvCores="$vCores" \
-         -Dtarget="$target" \
+         -Dreplicas="$replicas" \
          -DskipTests=true \
