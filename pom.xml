@@ -4,7 +4,7 @@
 
 	<groupId>f2031b49-cf8b-4968-a437-172bc36bc728</groupId>
 	<artifactId>testpushgit</artifactId>
-	<version>1.0.5</version>
+	<version>1.0.6</version>
 	<packaging>mule-application</packaging>
 
 	<name>testpushgit</name>
@@ -45,7 +45,7 @@
 						<connectedAppGrantType>client_credentials</connectedAppGrantType>
 						<applicationName>${applicationName}</applicationName>
 						<businessGroup>${businessGroup}</businessGroup>
-						<environment>${environment}</environment>
+						<environment>${env}</environment>
 						<!-- <workers>${workers}</workers> -->
 						<!-- <workerType>${workerType}</workerType> -->
 						<deploymentTimeout>30000</deploymentTimeout>
@@ -61,7 +61,7 @@
 						<skipDeploymentVerification>true</skipDeploymentVerification>
 						<!--<applyLatestRuntimePatch>true</applyLatestRuntimePatch>-->	
 						<replicas>${replicas}</replicas>
-						<vCores>${vCore}</vCores>
+						<vCores>${vCores}</vCores>
 						<properties>
 							<!-- <secureKey>${secureKey}</secureKey> -->
 							<anypoint.platform.client_id>${CLIENT_ID_ENVIRONMENT}</anypoint.platform.client_id>
