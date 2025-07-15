@@ -4,7 +4,7 @@
 
 	<groupId>f2031b49-cf8b-4968-a437-172bc36bc728</groupId>
 	<artifactId>testpushgit</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.3</version>
 	<packaging>mule-application</packaging>
 
 	<name>testpushgit</name>
@@ -42,7 +42,6 @@
 						<javaVersion>17</javaVersion>
 						<connectedAppClientId>8591d1b9eef349f3ab9d495c991bb62a</connectedAppClientId>
 						<connectedAppClientSecret>68C6C7Fa1f844B61a0B4Ba8787A2D495</connectedAppClientSecret>
-						<connectedAppGrantType>${grantType}</connectedAppGrantType>
 						<applicationName>${applicationName}</applicationName>
 						<businessGroup>${businessGroup}</businessGroup>
 						<environment>${environment}</environment>
