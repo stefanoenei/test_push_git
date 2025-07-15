@@ -93,15 +93,8 @@ jobs:
         target: "Cloudhub-EU-Central-1"
       
       run: |
-        artifactFile=$(ls *.jar | head -1)
-        artifactBase=${artifactFile%.jar}
-        artifactId=$(echo "$artifactBase" | sed -E 's/-[0-9]+.*$//')
-        appName="gf-${artifactId}-$(echo "$appEnvironment" | tr '[:upper:]' '[:lower:]')"
-        
-        echo "Artifact file: $artifactFile"
-        echo "Artifact ID: $artifactId"
-        echo "App Name: $appName"
-        
+        artifactName=$(ls *.jar | head -1)
+        appNameCloudhub=gf-${artifactName}-dev
         mvn -e -X deploy -DmuleDeploy \
           -Dmule.artifact="$artifactFile" \
           -DclientId="$CLIENTID" \
