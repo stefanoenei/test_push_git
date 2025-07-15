@@ -12,9 +12,11 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-		<app.runtime>4.9.0</app.runtime>
+		<app.runtime>4.9</app.runtime>
 		<mule.maven.plugin.version>4.5.0</mule.maven.plugin.version>
+		<ap.maven.server.id>anypoint-exchange-v3</ap.maven.server.id>
+		<deployment.name>testpushgit</deployment.name>
+		<mule.app.classifier>mule-application</mule.app.classifier>
 	</properties>
 
 	<build>
@@ -37,6 +39,7 @@
 						<provider>MC</provider>
 						<target>${target}</target>
 						<releaseChannel>${mule.deploy.releaseChannel}</releaseChannel>
+						<javaVersion>17</javaVersion>
 						<connectedAppClientId>${clientId}</connectedAppClientId>
 						<connectedAppClientSecret>${clientSecret}</connectedAppClientSecret>
 						<connectedAppGrantType>${grantType}</connectedAppGrantType>
