@@ -3,9 +3,14 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd">
     <servers>
         <server>
-            <id>anypoint-exchange-gruppo-florence</id>
+            <id>anypoint-exchange-v3</id>
             <username>~~~Client~~~</username>
-            <password>8591d1b9eef349f3ab9d495c991bb62a~?~68C6C7Fa1f844B61a0B4Ba8787A2D495</password>
+            <password>${connectedAppClientId}~?~${connectedAppClientSecret}</password>
+        </server>
+        <server>
+            <id>PrivateExchangeRepository</id>
+            <username>~~~Client~~~</username>
+            <password>${connectedAppClientId}~?~${connectedAppClientSecret}</password>
         </server>
         <server>
             <id>MuleRepository</id>
@@ -13,14 +18,4 @@
             <password>8zC6pOk13AH3hfd</password>
         </server>
     </servers>
-    <repositories>
-        <repository>
-            <id>anypoint-exchange-gruppo-florence</id>
-            <url>https://maven.eu1.anypoint.mulesoft.com/api/v3/organizations/f2031b49-cf8b-4968-a437-172bc36bc728/maven</url>
-        </repository>
-        <repository>
-            <id>anypoint-exchange-v3</id>
-            <url>https://maven.eu1.anypoint.mulesoft.com/api/v3/maven</url>
-        </repository>
-    </repositories>
 </settings>
