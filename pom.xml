@@ -87,8 +87,8 @@
 	</dependencies>
 	<distributionManagement>
 	  <repository>
-	    <id>anypoint-exchange-v3</id>
-	    <name>Anypoint Exchange</name>
+	    <id>anypoint-exchange-gruppo-florence</id>
+	    <name>Anypoint Exchange Gruppo Florence</name>
 	    <url>https://maven.anypoint.mulesoft.com/api/v1/organizations/${project.groupId}/maven</url>
 	  </repository>
 	</distributionManagement>
