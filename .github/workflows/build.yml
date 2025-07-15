@@ -55,6 +55,9 @@ jobs:
         TARGET: "Cloudhub-EU-Central-1"
         appEnvironment: "DEV"
         DEPLOYMENTENV: "DEV"
+        ORGANIZATION: "gruppo-florence"
+        replicas: "1"
+        vCores: "0.1"
 
       run: |
         artifactName=$(ls *.jar | head -1)
@@ -66,6 +69,9 @@ jobs:
          -Ddeployment.env="$DEPLOYMENTENV" \
          -DconnectedAppClientId="$CLIENTID" \
          -DconnectedAppClientSecret="$CLIENTSECRET" \
+         -DbusinessGroup="$ORGANIZATION" \
+         -DvCores="$vCores" \
+         -Dtarget="$target" \
    
     - name: Stamp artifact file name with commit hash
       run: |
@@ -110,6 +116,9 @@ jobs:
         appEnvironment: "DEV"
         DEPLOYMENTENV: "DEV"
         TARGET: "Cloudhub-EU-Central-1"
+        ORGANIZATION: "gruppo-florence"
+        replicas: "1"
+        vCores: "0.1"
       
       run: |
         artifactName=$(ls *.jar | head -1)
@@ -123,4 +132,7 @@ jobs:
          -DconnectedAppClientSecret="$CLIENTSECRET" \
          -Danypoint.client_id="$ENVCLIENT" \
          -Danypoint.client_secret="$ENVSECRET" \
+         -DbusinessGroup="$ORGANIZATION" \
+         -DvCores="$vCores" \
+         -Dtarget="$target" \
          -DskipTests=true \
