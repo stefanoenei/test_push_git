@@ -40,9 +40,9 @@ jobs:
         ENVCLIENT: ${{ secrets.ENVIRONMENT_CLIENT_ID }}
         ENVSECRET: ${{ secrets.ENVIRONMENT_CLIENT_SECRET }}
         #SECUREKEY: ${{ secrets.SECUREKEY }}
-        ENVIRONMENT: ${{ vars.ENV }}
-        TARGET: ${{ vars.TARGET }}
-        DEPLOYMENTENV: ${{ vars.DEPLOYMENT_ENV }}
+        ENVIRONMENT: "DEV"
+        TARGET: "Cloudhub-EU-Central-1"
+        DEPLOYMENTENV: "DEV"
       run: mvn -B package --file pom.xml --settings ~/.m2/settings.xml -Denv="$ENVIRONMENT" -Dtarget="$TARGET" -Ddeployment.env="$DEPLOYMENTENV" -Danypoint.client_id="$ENVCLIENT" -Danypoint.client_secret="$ENVSECRET" -DskipTests=true -DconnectedAppClientId="$CLIENTID" -DconnectedAppClientSecret="$CLIENTSECRET"  #-Dkey="$SECUREKEY"
    
     - name: Publish to Exchange
@@ -52,9 +52,9 @@ jobs:
         ENVCLIENT: ${{ secrets.ENVIRONMENT_CLIENT_ID }}
         ENVSECRET: ${{ secrets.ENVIRONMENT_CLIENT_SECRET }}
         #SECUREKEY: ${{ secrets.SECUREKEY }}
-        TARGET: ${{ vars.TARGET }}
-        appEnvironment: ${{ vars.ENV }}
-        DEPLOYMENTENV: ${{ vars.DEPLOYMENT_ENV }}
+        TARGET: "Cloudhub-EU-Central-1"
+        appEnvironment: "DEV"
+        DEPLOYMENTENV: "DEV"
 
       run: |
         artifactName=$(ls *.jar | head -1)
@@ -107,9 +107,9 @@ jobs:
         ENVCLIENT: ${{ secrets.ENVIRONMENT_CLIENT_ID }}
         ENVSECRET: ${{ secrets.ENVIRONMENT_CLIENT_SECRET }}
         #SECUREKEY: ${{ secrets.SECUREKEY }}
-        appEnvironment: ${{ vars.ENV }}
-        DEPLOYMENTENV: ${{ vars.DEPLOYMENT_ENV }}
-        TARGET: ${{ vars.TARGET }}
+        appEnvironment: "DEV"
+        DEPLOYMENTENV: "DEV"
+        TARGET: "Cloudhub-EU-Central-1"
       
       run: |
         artifactName=$(ls *.jar | head -1)
