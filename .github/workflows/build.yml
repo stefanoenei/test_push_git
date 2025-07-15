@@ -121,7 +121,7 @@ jobs:
         vCores: "0.1"
       
       run: |
-        artifactName=$(ls *.jar | head -1)
+        artifactName=$(ls *.jar | head -1 | cut -d'-' -f1)
         appName=gf-${artifactName}-dev
         mvn -e  deploy -DmuleDeploy \
          -Dmule.artifact="$artifactName" \
