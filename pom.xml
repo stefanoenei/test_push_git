@@ -87,7 +87,7 @@
 	</dependencies>
 	<distributionManagement>
 	  <repository>
-	    <id>anypoint-exchange</id>
+	    <id>anypoint-exchange-v3</id>
 	    <name>Anypoint Exchange</name>
 	    <url>https://maven.anypoint.mulesoft.com/api/v1/organizations/${project.groupId}/maven</url>
 	  </repository>
@@ -118,10 +118,4 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
-	<distributionManagement>
-  <repository>
-    <id>anypoint-exchange</id>
-    <name>Anypoint Exchange</name>
-    <url>https://maven.anypoint.mulesoft.com/api/v1/organizations/f2031b49-cf8b-4968-a437-172bc36bc728/maven</url>
-  </repository>
 </project>
