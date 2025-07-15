@@ -89,7 +89,7 @@
 	  <repository>
 	    <id>anypoint-exchange-gruppo-florence</id>
 	    <name>Anypoint Exchange Gruppo Florence</name>
-	    <url>https://maven.anypoint.mulesoft.com/api/v1/organizations/${project.groupId}/maven</url>
+	    <url>https://maven.anypoint.mulesoft.com/api/v1/organizations/f2031b49-cf8b-4968-a437-172bc36bc728/maven</url>
 	  </repository>
 	</distributionManagement>
 	<repositories>
