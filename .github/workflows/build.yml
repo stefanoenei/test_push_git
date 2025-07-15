@@ -2,13 +2,13 @@ name: Build & Deploy to Develop
 
 on:
   workflow_dispatch:
-    
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
-    
+
     - uses: actions/checkout@v3
 
     - name: Set up JDK 17
@@ -22,7 +22,7 @@ jobs:
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-maven-
-    
+
     - name: Create .m2 folder
       run: mkdir -p ~/.m2
 
@@ -37,22 +37,9 @@ jobs:
 
     - name: Print effective-settings (optional)
       run: mvn help:effective-settings --settings ~/.m2/settings.xml
-    
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml --settings ~/.m2/settings.xml
-    
-    - name: Stamp artifact file name with commit hash
-      run: |
-        artifactName1=$(ls target/*.jar | head -1)
-        commitHash=$(git rev-parse --short "$GITHUB_SHA")
-        artifactName2=$(ls target/*.jar | head -1 | sed "s/.jar/-$commitHash.jar/g")
-        mv $artifactName1 $artifactName2
-    
-    - name: Upload artifact 
-      uses: actions/upload-artifact@master
-      with:
-          name: artifacts
-          path: target/*.jar
+
+    - name: Package and deploy to Exchange
+      run: mvn clean deploy --settings ~/.m2/settings.xml
 
   deploy:
     needs: build
@@ -60,43 +47,46 @@ jobs:
     environment: 
       name: Dev
 
-    steps:    
-    
+    steps:
+
     - uses: actions/checkout@v3
-    
+
     - uses: actions/cache@v3
       with:
         path: ~/.m2/repository
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-maven-
-    
-    - uses: actions/download-artifact@master
-      with:
-        name: artifacts
-    
-    - name: Deploy to Development
+
+    - name: Create .m2 folder
+      run: mkdir -p ~/.m2
+
+    - name: Copy settings.xml to .m2 folder
+      run: cp settings.xml ~/.m2/settings.xml
+
+    - name: Insert username into settings.xml
+      run: sed -i 's/ANYPOINT_PLATFORM_USERNAME/${{ secrets.ANYPOINT_PLATFORM_USERNAME }}/g' ~/.m2/settings.xml
+
+    - name: Insert password into settings.xml
+      run: sed -i 's/ANYPOINT_PLATFORM_PASSWORD/${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}/g' ~/.m2/settings.xml
+
+    - name: Print effective-settings (optional)
+      run: mvn help:effective-settings --settings ~/.m2/settings.xml
+
+    - name: Deploy to CloudHub 2.0
       env:
         CLIENTID: ${{ secrets.ANYPOINT_PLATFORM_USERNAME }}
         CLIENTSECRET: ${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}
         GRANTTYPE: "client_credentials"
-        #secureKey: ${{ secrets.ANYPOINT_ENCRYPTIONKEY }}
-        CLIENT_ID_ENVIRONMENT: ${{ secrets.ENVIRONMENT_CLIENT_ID }}
-        CLIENT_SECRET_ENVIRONMENT: ${{ secrets.ENVIRONMENT_CLIENT_SECRET }}
         ORGANIZATION: "gruppo-florence"
         appEnvironment: "DEV"
         DEPLOY_ENVIRONMENT: "DEV"
         MULE_RUNTIME_VERSION: "4.9"
-        stconcate: "-"
         replicas: "1"
         vCores: "0.1"
         target: "Cloudhub-EU-Central-1"
-      
       run: |
-        artifactName=$(ls *.jar | head -1)
-        appNameCloudhub=gf-${artifactName}-dev
-        mvn -e -X deploy -DmuleDeploy \
-          -Dmule.artifact="$artifactFile" \
+        mvn -e -X deploy -DmuleDeploy --settings ~/.m2/settings.xml \
           -DclientId="$CLIENTID" \
           -DclientSecret="$CLIENTSECRET" \
           -DgrantType="$GRANTTYPE" \
@@ -104,9 +94,7 @@ jobs:
           -DmuleRuntime="$MULE_RUNTIME_VERSION" \
           -Denvironment="$appEnvironment" \
           -Denv="$DEPLOY_ENVIRONMENT" \
-          -DapplicationName="$appName" \
           -Dreplicas="$replicas" \
           -DvCores="$vCores" \
           -Dtarget="$target" \
           -DskipTests
-
