@@ -4,8 +4,8 @@
     <servers>
         <server>
             <id>anypoint-exchange-gruppo-florence</id>
-            <username>~~~Client~~~</username>
-            <password>ANYPOINT_PLATFORM_USERNAME~?~ANYPOINT_PLATFORM_PASSWORD</password>
+            <username>8591d1b9eef349f3ab9d495c991bb62a</username>
+            <password>68C6C7Fa1f844B61a0B4Ba8787A2D495</password>
         </server>
         <server>
             <id>MuleRepository</id>
