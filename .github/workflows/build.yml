@@ -94,19 +94,26 @@ jobs:
       
       run: |
         artifactFile=$(ls *.jar | head -1)
-        artifactName=$(basename "$artifactFile" .jar | sed -E 's/-[0-9].*$//')
-        appName="gf-${artifactName}-$(echo "$appEnvironment" | tr '[:upper:]' '[:lower:]')"
+        artifactBase=${artifactFile%.jar}
+        artifactId=$(echo "$artifactBase" | sed -E 's/-[0-9]+.*$//')
+        appName="gf-${artifactId}-$(echo "$appEnvironment" | tr '[:upper:]' '[:lower:]')"
+        
+        echo "Artifact file: $artifactFile"
+        echo "Artifact ID: $artifactId"
+        echo "App Name: $appName"
+        
         mvn -e -X deploy -DmuleDeploy \
-         -Dmule.artifact=$artifactName \
-         -DclientId="$CLIENTID" \
-         -DclientSecret="$CLIENTSECRET" \
-         -DgrantType="$GRANTTYPE" \
-         -DbusinessGroup="$ORGANIZATION" \
-         -DmuleRuntime="$MULE_RUNTIME_VERSION" \
-         -Denvironment="$appEnvironment" \
-         -Denv="$DEPLOY_ENVIRONMENT" \
-         -DapplicationName="$appNameCloudhub" \
-         -Dreplicas="$replicas" \
-         -DvCores="$vCores" \
-         -Dtarget="$target" \
-         -DskipTests
+          -Dmule.artifact="$artifactFile" \
+          -DclientId="$CLIENTID" \
+          -DclientSecret="$CLIENTSECRET" \
+          -DgrantType="$GRANTTYPE" \
+          -DbusinessGroup="$ORGANIZATION" \
+          -DmuleRuntime="$MULE_RUNTIME_VERSION" \
+          -Denvironment="$appEnvironment" \
+          -Denv="$DEPLOY_ENVIRONMENT" \
+          -DapplicationName="$appName" \
+          -Dreplicas="$replicas" \
+          -DvCores="$vCores" \
+          -Dtarget="$target" \
+          -DskipTests
+
