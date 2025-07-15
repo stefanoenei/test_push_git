@@ -3,17 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd">
     <servers>
         <server>
-            <id>anypoint-exchange-v3</id>
-            <username>~~~Client~~~</username>
-            <password>ANYPOINT_PLATFORM_USERNAME~?~ANYPOINT_PLATFORM_PASSWORD</password>
-        </server>
-        <server>
             <id>anypoint-exchange-gruppo-florence</id>
-            <username>~~~Client~~~</username>
-            <password>ANYPOINT_PLATFORM_USERNAME~?~ANYPOINT_PLATFORM_PASSWORD</password>
-        </server>
-        <server>
-            <id>anypoint-exchange-v2</id>
             <username>~~~Client~~~</username>
             <password>ANYPOINT_PLATFORM_USERNAME~?~ANYPOINT_PLATFORM_PASSWORD</password>
         </server>
