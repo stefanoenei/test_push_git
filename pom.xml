@@ -4,7 +4,7 @@
 
 	<groupId>f2031b49-cf8b-4968-a437-172bc36bc728</groupId>
 	<artifactId>testpushgit</artifactId>
-	<version>1.0.3</version>
+	<version>1.0.4</version>
 	<packaging>mule-application</packaging>
 
 	<name>testpushgit</name>
